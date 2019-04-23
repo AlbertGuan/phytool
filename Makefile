@@ -9,7 +9,7 @@ PKG     = $(NAME)-$(VERSION)
 ARCHIVE = $(PKG).tar.xz
 APPLETS = mv6tool
 
-PREFIX ?= /usr/local/
+PREFIX ?= /usr/
 CFLAGS ?= -Wall -Wextra -Werror
 LDLIBS  = 
 
@@ -28,7 +28,7 @@ all: phytool
 
 clean:
 	@rm -f *.o
-	@rm -f $(TARGET)
+	@rm -f $(NAME)
 
 dist:
 	@echo "Creating $(ARCHIVE), with $(ARCHIVE).md5 in parent dir ..."
@@ -39,4 +39,10 @@ install: phytool
 	@cp phytool $(DESTDIR)/$(PREFIX)/bin/
 	@for app in $(APPLETS); do \
 		ln -sf phytool $(DESTDIR)/$(PREFIX)/bin/$$app; \
+	done
+
+uninstall: phytool
+	@rm $(DESTDIR)/$(PREFIX)/bin/$(NAME)
+	@for app in $(APPLETS); do \
+		unlink $(DESTDIR)/$(PREFIX)/bin/$$app; \
 	done
